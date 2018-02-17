@@ -1,0 +1,30 @@
+//package javaapplication2;
+//
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//public class SubArrayPro {
+//	public static void main(String[] args) {
+//		int[] tt = { 2, -1, 3, -3, 5 };
+//		findme(tt);
+//	}
+//
+//	private static void findme(int[] tt) {
+//		int sum = 0;
+//		List<Integer> lst = new ArrayList<Integer>();
+//
+//		for (int i = 0; i < tt.length - 1; i++) {
+//			lst.add(tt[i]);
+//			sum = sum + tt[i];
+//			for (int j = i + 1; i < tt.length; j++) {
+//				if (sum + tt[j] > sum) {
+//					sum = sum + tt[j];
+//					lst.add(tt[j]);
+//				} else {
+//					break;
+//				}
+//			}
+//			
+//		}
+//	}
+//}

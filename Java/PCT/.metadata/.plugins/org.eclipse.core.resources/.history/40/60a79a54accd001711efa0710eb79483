@@ -1,0 +1,88 @@
+package javaapplication2;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Random;
+
+public class BinaryTree {
+	static Node root;
+	static int maxLevel = 0;
+
+	public static void main(String[] args) {
+		Random r = new Random();
+		for (int i = 0; i < 10; i++) {
+			addNode(r.nextInt(50), root);
+		}
+		printer(root);
+		System.out.println("Neter the key to search:");
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String key = br.readLine();
+		Node result = searchKey(Integer.valueOf(key) ,root);
+		System.out.println("The result is " + (result != null ? result.Key : "Nothing") + " Level is: "
+				+ (result != null ? result.level : "Nothing"));
+
+	}
+
+	public static void setMaxHeight(int level) {
+		if (level > maxLevel)
+			maxLevel = level;
+	}
+
+	public static Node searchKey(int key, Node root) {
+		if (root == null)
+			return null;
+		if (key == root.Key)
+			return root;
+		if (key > root.Key)
+			searchKey(key, root.right);
+		return searchKey(key, root.left);
+	}
+
+	public static void addNode(int nodeValue, Node currentNode) {
+		if (root == null) {
+			root = new Node(nodeValue, 0, null);
+			return;
+		}
+		if (nodeValue > currentNode.Key) {
+			if (currentNode.right == null) {
+				setMaxHeight(currentNode.level + 1);
+				currentNode.right = new Node(nodeValue, currentNode.level + 1, currentNode);
+				return;
+			} else {
+				currentNode = currentNode.right;
+				addNode(nodeValue, currentNode);
+			}
+		}
+
+		if (nodeValue < currentNode.Key) {
+			if (currentNode.left == null) {
+				setMaxHeight(currentNode.level + 1);
+				currentNode.left = new Node(nodeValue, currentNode.level + 1, currentNode);
+				return;
+			} else {
+				currentNode = currentNode.left;
+				addNode(nodeValue, currentNode);
+			}
+		}
+	}
+
+	private static void printer(Node root) {
+		for (int i = 0; i <= maxLevel; i++) {
+			printTree(root, i);
+			System.out.println("");
+		}
+	}
+
+	private static void printTree(Node root, int level) {
+
+		if (root.level == level) {
+			System.out.print(root.Key + "(" + (root.pr != null ? root.pr.Key : "") + ")" + " ");
+		}
+		if (root.left != null)
+			printTree(root.left, level);
+
+		if (root.right != null)
+			printTree(root.right, level);
+
+	}
+}

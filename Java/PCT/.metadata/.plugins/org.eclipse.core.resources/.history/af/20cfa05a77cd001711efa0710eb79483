@@ -1,0 +1,29 @@
+package javaapplication2;
+
+public class BinaryTree {
+	static Node root;
+
+	public static void main(String[] args) {
+		
+	}
+
+	public static void addNode(int nodeValue,Node currentNode) {
+
+		if (root == null)
+			root = new Node(nodeValue);
+		
+		currentNode = root;
+		if(currentNode = null)
+		{
+			
+		}
+		if (nodeValue > currentNode.Key)
+			currentNode = currentNode.right;
+
+		if (nodeValue < currentNode.Key)
+			currentNode = currentNode.left;
+
+		addNode(nodeValue,currentNode);
+
+	}
+}

@@ -1,0 +1,242 @@
+
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.PDFTextStripperByArea;
+//import org.codehaus.jackson.map.ObjectMapper;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.omg.CORBA.portable.InputStream;
+
+import com.fasterxml.jackson.databind.DeserializationConfig;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+import POJO.*;
+
+
+ 
+
+public class DistanceFinderDriver {
+    public String DistanceAPIUrl = "http://www.distance24.org/route.json?stops=";
+	public String PDFLoc = "C:\\Users\\Admin\\Desktop\\icao.pdf";
+    public Map.Entry<String, String> ListOriginDesitination;
+	public String FlightAwareApiUrl = "https://flightxml.flightaware.com/json/FlightXML3/";
+	public String AircraftTypeQuerySegment= "FindFlight?";
+	public String username = "paulalwin91";
+	public String password = "5675820026bdc586a853825d669ef435e9def9e0";
+	
+	public void fetchAircraftType(String origin, String destination)
+	{
+		HttpURLConnection connection = null;
+		   JSONParser parser = new JSONParser();
+		try {
+		  URL url = new URL(FlightAwareApiUrl + AircraftTypeQuerySegment + "origin=" +origin + "&destination=" + destination);
+		    connection = (HttpURLConnection) url.openConnection();
+		    connection.setRequestMethod("GET");	
+		    String encoded = Base64.getEncoder().encodeToString((username+":"+password).getBytes(StandardCharsets.UTF_8));  //Java 8
+		    connection.setRequestProperty("Authorization", "Basic "+encoded);
+		    connection.connect();
+	        int status = connection.getResponseCode();
+	        
+	        switch (status) {
+            
+            case 200:
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                
+            //    JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("C:\\Users\\Admin\\Downloads\\data.json"));
+
+                while ((line = br.readLine()) != null) {
+                    sb.append(line);
+                }
+                Object obj = parser.parse(sb.toString());
+                JSONObject jsonObject = (JSONObject) obj;                
+                ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                AircraftTypeResultDTO mypojo = objectMapper.readValue(jsonObject.toString(), AircraftTypeResultDTO.class);
+                br.close();                		
+        }
+	    
+		}
+		catch(Exception e) {
+		    e.printStackTrace();
+		  }
+	}
+	
+	
+    public static void main(String args[]) throws InvalidPasswordException, IOException
+	{
+		DistanceFinderDriver df = new DistanceFinderDriver();
+		//df.FetchDistance("france","mumbai");
+		//df.fetchAircraftType("YUL", "HAM");
+		//OriginDestination = new OriginDestination<>(key, value);		
+		//df.reafPDF(); //
+		df.threadedDistanceFinder();
+	}
+	
+    private void threadedDistanceFinder()
+    {
+    	try {
+    	File oldFile = new File("C:\\Users\\Admin\\Desktop\\Documents\\Text\\Sample.txt");
+    	String line;
+    	StringBuilder sbLine = new StringBuilder();
+    	BufferedReader brSampleReader = new BufferedReader(new FileReader(oldFile));
+    	List<String> airports = new ArrayList<String>();
+    	//char[] alphabet = "abcdefghijklmnop".toCharArray();	
+    	
+        while((line = brSampleReader.readLine()) !=null)
+			{
+				sbLine = sbLine.append(line);
+			}
+		
+        
+        for(int i = 0; i< sbLine.toString().split(" ").length;i++)
+        {
+        	if(i%2 == 0)
+        		{
+        		airports.add(sbLine.toString().split(" ")[i]);
+        		}
+        }
+    	int totalWorkUnits;
+        int totalThreadCount;
+    	int startIndex;
+        int endIndex;
+        int workUnitPerThread;
+        
+        if(airports.size() > 100)
+        {
+        	//Create 100 threads
+        	totalWorkUnits = airports.size();
+        	totalThreadCount = 100;
+        	workUnitPerThread = totalWorkUnits/totalThreadCount;
+        	
+        	for(int threadIndex = 0; threadIndex < totalThreadCount; threadIndex++)
+        	{
+        		startIndex = 
+        		
+        	}
+        	
+        }else
+        { // Create 10 threads
+        	totalWorkUnits = airports.size();
+        	totalThreadCount = 10;
+        	
+        }
+  
+        	new Thread(new MoiThread(airports.subList(fromIndex, toIndex), new DistanceFinderDriver())).start();
+        
+        
+        brSampleReader.close();
+    	} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
+    }
+    
+	private void reafPDF() throws InvalidPasswordException, IOException {
+	       
+		try (PDDocument document = PDDocument.load(new File(PDFLoc))) {
+	            document.getClass();
+
+	            if (!document.isEncrypted()) {
+	            	BufferedWriter out = new BufferedWriter(new FileWriter(
+	                		"C:\\Users\\Admin\\Desktop\\Sample- Copy.txt",true));
+	                PDFTextStripperByArea stripper = new PDFTextStripperByArea();
+	                stripper.setSortByPosition(true);
+
+	                PDFTextStripper tStripper = new PDFTextStripper();
+
+	                String pdfFileInText = tStripper.getText(document);
+	                //System.out.println("Text:" + st);
+
+					// split by whitespace
+	                String lines[] = pdfFileInText.split("\\r?\\n");
+	                for (String line : lines) {
+	                    out.write(line,0,line.length());
+	                    out.newLine();
+	                }
+
+	            }
+
+	        }	
+	}
+
+
+	public String FetchDistance(String origin, String destination)
+	{
+		HttpURLConnection connection = null;
+		   JSONParser parser = new JSONParser();
+		try {
+		  URL url = new URL(DistanceAPIUrl  + origin + "|" + destination);
+		    connection = (HttpURLConnection) url.openConnection();
+		    connection.setRequestMethod("GET");		   
+		    connection.connect();
+	        int status = connection.getResponseCode();
+
+	        switch (status) {
+	            
+	            case 200:
+	                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+	                BufferedWriter out = new BufferedWriter(new FileWriter(
+	                		"C:\\Users\\Admin\\Desktop\\Sample.txt",true));
+	                StringBuilder sb = new StringBuilder();
+	                String line;
+	                
+	                while ((line = br.readLine()) != null) {
+	                    sb.append(line);
+	                }
+	                Object obj = parser.parse(sb.toString());
+	                JSONObject jsonObject = (JSONObject) obj; 
+	                
+	                jsonObject.remove("stops");
+	                jsonObject.remove("travel");
+	                jsonObject.remove("distance");
+	                
+	                ObjectMapper mapper = new ObjectMapper();
+	                DistanceDTO mypojo = mapper.readValue(jsonObject.toString(), DistanceDTO.class);
+	              //  out.write(origin +","+ destination + ","  +mypojo.toString()+"\n",0,(origin +","+ destination + ","  +mypojo.toString()).toString().length());
+	                out.newLine();
+	                out.close();
+	                br.close();
+	                return mypojo.toString();
+	        }
+		    
+		    
+		}
+		catch(Exception e) {
+		    e.printStackTrace();
+		  }
+		return "";
+	}
+
+//	private JSONObject PurifyObject(JSONObject jsonObject) {
+//		
+//		for(String key: jsonObject.get)
+//		
+//		return null;
+//	}
+//	
+	
+}

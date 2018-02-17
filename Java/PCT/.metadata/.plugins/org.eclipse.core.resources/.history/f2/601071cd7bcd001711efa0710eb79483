@@ -1,0 +1,18 @@
+package javaapplication2;
+
+public class Node {
+
+	public int Key;
+	public Node left, right;
+	public int level;
+	public int maxLevel;
+
+	public setmaxLevel()
+	public Node(int nodeValue, int lvl) {
+		this.Key = nodeValue;
+		this.left = null;
+		this.right = null;
+		this.level = lvl;
+		setmaxLevel(lvl)
+	}
+}

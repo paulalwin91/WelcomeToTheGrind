@@ -1,0 +1,235 @@
+package risk.helpers;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
+
+import risk.model.RiskGameModel;
+import risk.model.RiskPlayerModel;
+import risk.model.RiskTerritoryModel;
+import risk.model.interfaces.PhaseViewInterface;
+
+/**
+ * This class is used to get the path of the resources used in the project.
+ */
+public final class Utility {
+
+	/**
+	 * Gets the image path.
+	 *
+	 * @param imageNameWithExtention
+	 *            the image name with extention
+	 * @return the image path
+	 */
+	public static String getImagePath(String imageNameWithExtention) {
+		return "/risk/resources/images/" + imageNameWithExtention;
+	}
+
+	/**
+	 * Gets the map path.
+	 *
+	 * @param mapNameWithExtension
+	 *            the map name with extension
+	 * @return the map path
+	 */
+	public static String getMapPath(String mapNameWithExtension) {
+		return "/risk/resources/map/" + mapNameWithExtension;
+	}
+
+	/**
+	 * Gets the map pathfor file.
+	 *
+	 * @param mapNameWithExtension
+	 *            the map name with extension
+	 * @return the map pathfor file
+	 */
+	public static String getMapPathforFile(String mapNameWithExtension) {
+		return "src/risk/resources/map/" + mapNameWithExtension;
+	}
+
+	/**
+	 * Gets the pathfor file.
+	 *
+	 * @param fileNameWithExtension
+	 *            the file name with extension
+	 * @return the pathfor file
+	 */
+	public static String getPathforFile(String fileNameWithExtension) {
+		return "src/risk/resources/" + fileNameWithExtension;
+	}
+
+	/**
+	 * Gets the phase informtion.
+	 *
+	 * @param IPhaseViewInterface
+	 *            the i phase view interface
+	 * @return the phase informtion
+	 */
+	public static String getPhaseInformtion(PhaseViewInterface IPhaseViewInterface) {
+		String objectType = (IPhaseViewInterface).getObjectType();
+		String phaseInformation;
+		switch (objectType) {
+		case "RiskStartupPhaseModel":
+			phaseInformation = "This is the Start up phase. Start the game by choosing the map,number of players and distribution of armies depending upon the number of players accordingly..";
+			break;
+		case "RiskReinforcementPhaseModel":
+			phaseInformation = "Getting additional armies, that you may allocate among your territories.\r\n"
+					+ "No. of armies you get :\r\n"
+					+ "       -1 army per 3 territories, rounded down, minimum of 3.\r\n"
+					+ "       -For complete continent\r\n" + "       -set of Risk Cards cashed in.";
+			break;
+		case "RiskAttackPhaseModel":
+			phaseInformation = "An attack is actually one or more battles which are fought with dice. The object of an attack is to capture a territory.";
+			break;
+		case "RiskFortifyPhaseModel":
+			phaseInformation = "This is the Fortifying phase where we can move any number of armies from one of a pair of neighbouring territories to other.";
+			break;
+		default:
+			phaseInformation = "Who am I?";
+			break;
+		}
+
+		return phaseInformation;
+	}
+
+	/**
+	 * Gets the phase title.
+	 *
+	 * @param IPhaseViewInterface
+	 *            the i phase view interface
+	 * @return the phase title
+	 */
+	public static String getPhaseTitle(PhaseViewInterface IPhaseViewInterface) {
+		String objectType = (IPhaseViewInterface).getObjectType();
+		String phaseTitle;
+		switch (objectType) {
+		case "RiskStartupPhaseModel":
+			phaseTitle = "*********** Start Up Phase *************";
+			break;
+		case "RiskAttackStartupEndPhaseModel":
+			phaseTitle = "********** Start Up Phase **************";
+			break;
+		case "RiskReinforcementPhaseModel":
+			phaseTitle = "*********** Reinforcement Phase *************";
+			break;
+		case "RiskAttackPhaseModel":
+			phaseTitle = "*********** Atack Phase *************";
+			break;
+		case "RiskFortifyPhaseModel":
+			phaseTitle = "*********** Fortify Phase *************";
+			break;
+		default:
+			phaseTitle = "I am no one";
+			break;
+		}
+
+		return phaseTitle;
+	}
+
+	/**
+	 * Write log.
+	 *
+	 * @param text
+	 *            the text
+	 */
+	public static void writeLog(String text, Boolean... isApplicationStart) {
+		try (FileWriter fw = new FileWriter("log\\log.txt", isApplicationStart.length == 0); // Overwrite
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw)) {
+			out.println(text);
+			out.println();
+			out.close();
+			bw.close();
+			fw.close();
+		} catch (IOException exception) {
+			exception.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * Write log.
+	 *
+	 * @param text
+	 *            the text
+	 */
+	public static void writePlayerViewLog(String text, Boolean... isApplicationStart) {
+		try (FileWriter fw = new FileWriter("log\\PlayerViewLog.txt", isApplicationStart.length == 0); // Overwrite
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw)) {
+			out.println(text);
+			out.println();
+			out.close();
+			bw.close();
+			fw.close();
+		} catch (IOException exception) {
+			exception.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * Write log.
+	 *
+	 * @param text
+	 *            the text
+	 */
+	public static void writePhaseViewLog(String text, Boolean... isApplicationStart) {
+		try (FileWriter fw = new FileWriter("log\\PhaseViewLog.txt", isApplicationStart.length == 0); // Overwrite
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw)) {
+			out.println(text);
+			out.println();
+			out.close();
+			bw.close();
+			fw.close();
+		} catch (IOException exception) {
+			exception.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * Write log.
+	 *
+	 * @param text
+	 *            the text
+	 */
+	public static void writeCardViewLog(String text, Boolean... isApplicationStart) {
+		try (FileWriter fw = new FileWriter("log\\CardViewLog.txt", isApplicationStart.length == 0); // Overwrite
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw)) {
+			out.println(text);
+			out.println();
+			out.close();
+			bw.close();
+			fw.close();
+		} catch (IOException exception) {
+			exception.printStackTrace();
+		}
+		
+	}
+
+	public static void writeGameStats(RiskGameModel riskGameModel) {
+		try (FileWriter fw = new FileWriter("log\\GameStats.txt",true); // Overwrite
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw)) {
+			out.println("***Game Stats***\n\n");
+			out.println(riskGameModel.curPlayer.getName() + " T Count " + riskGameModel.curPlayer.getOccupiedTerritories().size()
+					+ " Army Count " + riskGameModel.curPlayer.getNumberOfArmies() + "\n\n");
+			for(RiskTerritoryModel terr : riskGameModel.curPlayer.getOccupiedTerritories()) {
+				out.println(terr.getName() + " " + terr.getArmies());
+			}
+			out.println("***Game Stats***\n\n");
+			out.close();
+			bw.close();
+			fw.close();
+		} catch (IOException exception) {
+			exception.printStackTrace();
+		}
+		
+	}
+	
+}

@@ -1,0 +1,949 @@
+
+package risk.controller;
+
+import risk.model.*;
+
+import risk.model.Observable.RiskAttackPhaseModel;
+import risk.model.Observable.RiskFortifyPhaseModel;
+import risk.model.Observable.RiskReinforcementPhaseModel;
+import risk.model.Observable.RiskStartupEndPhaseModel;
+import risk.model.Observable.RiskStartupPhaseModel;
+import risk.view.RiskPhaseViewObserver;
+import risk.view.RiskPlayerDominationViewObserver;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+
+import risk.model.*;
+import risk.controller.RiskPlayerPanelViewController;
+import risk.helpers.Utility;
+
+/**
+ * This class contains the card logic as well as it tales the phase from the
+ * RiskGameModel and displays when a player should put armies on unoccupied
+ * territory and when the army should be placed on the occupied territory.
+ * 
+ * @author Team8
+ */
+public class RiskController extends javax.swing.JFrame implements MouseListener {
+
+	/**
+	 * Gets the cEndButton.setVisible(true)ount trade cards.
+	 *
+	 * @return the count trade cards
+	 */
+	public int getCountTradeCards() {
+		return countTradeCards;
+	}
+
+	public RiskGameModel getRisk() {
+		return risk;
+	}
+
+	public void setRisk(RiskGameModel test) {
+		risk = test;
+	}
+
+	public RiskController(String test) {
+		risk = new RiskGameModel(test);
+	}
+
+	/**
+	 * Gets the risk current player.
+	 *
+	 * @return the risk current player
+	 */
+	public RiskPlayerModel getRiskCurPlayer() {
+		return risk.curPlayer;
+	}
+
+	/**
+	 * Sets the risk current player.
+	 *
+	 * @param riskplayermodel,
+	 *            new risk current player
+	 */
+	public void setRiskCurPlayer(RiskPlayerModel riskplayermodel) {
+
+		risk.curPlayer = riskplayermodel;
+		risk.curPlayer.setCard(new RiskCardModel(1, 39));
+		risk.curPlayer.setCard(new RiskCardModel(1, 39));
+		risk.curPlayer.setCard(new RiskCardModel(3, 11));
+
+	}
+
+	/**
+	 * Instantiates a new risk controller.
+	 */
+	public RiskController() {
+		if (!RiskController.isSavedGameLoaded)
+			risk = new RiskGameModel();
+		else
+			risk = loadSavedRiskGameModel();
+		initComponents();
+		initializePhaseView(risk);
+		risk.mainPanel = jPanel1;
+		risk.subPanel = jPanel3;
+		setLocationRelativeTo(null);
+		setResizable(false);
+		jPanel1.repaint();
+		jPanel1.addMouseListener(this);
+		AttackButton.setVisible(false);
+		risk.curPlayer.takeTurn(risk);
+	}
+
+	private RiskGameModel loadSavedRiskGameModel() {
+		// TODO Auto-generated method stub
+		this.risk = null;
+		RiskGameModelSerializable riskStaticComponents;
+		try {
+			FileInputStream fileIn = new FileInputStream("C:\\Users\\Admin\\Desktop\\Documents\\Text\\RiskNonStaticModel.ser");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			this.risk = (RiskGameModel) in.readObject();
+			riskStaticComponents = (RiskGameModelSerializable)new ObjectInputStream(new FileInputStream("C:\\Users\\Admin\\Desktop\\Documents\\Text\\save.ser")).readObject();
+			this.risk.mapRiskGameSerizableToRiskGameModel(riskStaticComponents);
+			in.close();
+			fileIn.close();
+			return this.risk;
+		} catch (IOException i) {
+			i.printStackTrace();
+			return null;
+		} catch (ClassNotFoundException c) {
+			System.out.println("Employee class not found");
+			c.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Initialize phase view.
+	 *
+	 */
+	private void initializePhaseView(RiskGameModel risk) {
+
+		RiskStartupPhaseModel objStartupPhaseModelObservable = RiskStartupPhaseModel.getInstance();
+		RiskStartupEndPhaseModel objRiskStartupEndPhaseModel = RiskStartupEndPhaseModel.getInstance();
+		RiskReinforcementPhaseModel objRiskReinforcementPhaseModelObservable = RiskReinforcementPhaseModel
+				.getInstance();
+		RiskAttackPhaseModel objRiskAttackPhaseModelObservable = RiskAttackPhaseModel.getInstance();
+		RiskFortifyPhaseModel objRiskFortifyPhaseModelObservable = RiskFortifyPhaseModel.getInstance();
+		RiskPhaseViewObserver objPhaseViewObserver = RiskPhaseViewObserver.getInstance();
+
+		objStartupPhaseModelObservable.addObserver(objPhaseViewObserver);
+		objRiskReinforcementPhaseModelObservable.addObserver(objPhaseViewObserver);
+		objRiskAttackPhaseModelObservable.addObserver(objPhaseViewObserver);
+		objRiskFortifyPhaseModelObservable.addObserver(objPhaseViewObserver);
+		objRiskStartupEndPhaseModel.addObserver(objPhaseViewObserver);
+
+		risk.setRiskStartupPhaseModelObservable(objStartupPhaseModelObservable);
+		risk.setRiskRiskReinforcementPhaseModelObservable(objRiskReinforcementPhaseModelObservable);
+		risk.setRiskAttackPhaseModelObservable(objRiskAttackPhaseModelObservable);
+		risk.setRiskFortifyPhaseModelObservable(objRiskFortifyPhaseModelObservable);
+		risk.setRiskStartupEndPhaseModelObservable(objRiskStartupEndPhaseModel);
+
+		risk.setRiskPhaseViewObserver(objPhaseViewObserver);
+		risk.getRiskPhaseViewObserver().generatePhaseView();
+		risk.notifyPhaseViewChange();
+	}
+
+	/**
+	 * This method is called from within the constructor to initialize the form.
+	 */
+	private void initComponents() {
+		jPanel1 = new RiskMapPanelViewController(risk);
+		jPanel3 = new RiskPlayerPanelViewController(risk);
+		statusLabel = new javax.swing.JLabel();
+		AttackButton = new javax.swing.JButton();
+		EndButton = new javax.swing.JButton();
+		SaveButton = new javax.swing.JButton();
+		FortifyButton = new javax.swing.JButton();
+		CardButton = new javax.swing.JButton();
+
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance()
+				.getContext().getResourceMap(RiskController.class);
+		setTitle(resourceMap.getString("Form.title")); // NOI18N
+		setBackground(resourceMap.getColor("Form.background")); // NOI18N
+		setForeground(resourceMap.getColor("Form.foreground")); // NOI18N
+		setName("Form"); // NOI18N
+
+		jPanel1.setBackground(resourceMap.getColor("jPanel1.background")); // NOI18N
+		jPanel1.setBorder(null);
+		jPanel1.setName("jPanel1"); // NOI18N
+		jPanel1.setLayout(null);
+
+		jPanel3.setBackground(resourceMap.getColor("jPanel3.background")); // NOI18N
+		jPanel3.setBorder(null);
+		jPanel3.setForeground(resourceMap.getColor("jPanel3.foreground")); // NOI18N
+		jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+		jPanel3.setName("jPanel3"); // NOI18N
+		jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+		statusLabel.setFont(resourceMap.getFont("statusLabel.font")); // NOI18N
+		statusLabel.setForeground(resourceMap.getColor("statusLabel.foreground")); // NOI18N
+		statusLabel.setText("New Game"); // NOI18N
+		statusLabel.setName("statusLabel"); // NOI18N
+		jPanel3.add(statusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 63, 427, -1));
+
+		AttackButton.setFont(resourceMap.getFont("AttackButton.font")); // NOI18N
+		AttackButton.setText("Attack"); // NOI18N
+		AttackButton.setName("AttackButton"); // NOI18N
+		AttackButton.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				AttackButtonMouseClicked(evt);
+			}
+		});
+		jPanel3.add(AttackButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, 89, -1));
+
+		EndButton.setVisible(true);
+		EndButton.setFont(resourceMap.getFont("EndButton.font")); // NOI18N
+		EndButton.setText("End"); // NOI18N
+		EndButton.setName("EndButton"); // NOI18N
+		EndButton.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				EndButtonMouseClicked(evt);
+			}
+		});
+
+		SaveButton.setVisible(true);
+		SaveButton.setFont(resourceMap.getFont("EndButton.font")); // NOI18N
+		SaveButton.setText("End"); // NOI18N
+		SaveButton.setName("EndButton"); // NOI18N
+		SaveButton.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				GameSaveButtonMouseClicked(evt);
+			}
+		});
+		jPanel3.add(EndButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, -1, 30));
+		jPanel3.add(SaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 30, -1, 30));
+
+		FortifyButton.setVisible(false);
+		FortifyButton.setFont(resourceMap.getFont("FortifyButton.font")); // NOI18N
+		FortifyButton.setText("Fortify"); // NOI18N
+		FortifyButton.setName("Fortify"); // NOI18N
+		FortifyButton.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				FortifyButtonMouseClicked(evt);
+			}
+		});
+		jPanel3.add(FortifyButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(661, 30, 90, 30));
+
+		CardButton.setVisible(true);
+		CardButton.setFont(resourceMap.getFont("CardButton.font")); // NOI18N
+		CardButton.setText("Card"); // NOI18N
+		CardButton.setName("CardButton"); // NOI18N
+		CardButton.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				CardButtonMouseClicked(evt);
+			}
+		});
+		jPanel3.add(CardButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(438, 25, 220, 25));
+
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
+				.addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 533,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)));
+
+		Utility.writeLog("Build the Game Panel");
+
+		pack();
+	}
+
+	private void GameSaveButtonMouseClicked(MouseEvent evt) {
+		this.risk.saveGame(risk);
+	}
+
+	/**
+	 * Attack button mouse clicked.
+	 *
+	 */
+	private void AttackButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_AttackButtonMouseClicked
+		Utility.writeLog("Attack Phase entered");
+		risk.setState(RiskGameModel.ATTACK);
+		FortifyButton.setVisible(false);
+		EndButton.setVisible(true);
+		statusLabel.setText("Select a territory to attack with");
+		if (AttackButton.getText().equals("Retreat")) {
+			risk.setState(RiskGameModel.ACTIVE_TURN);
+			risk.aTerritory = null;
+			risk.defenseTerritory = null;
+			if (risk.active == risk.defender)
+				risk.active = risk.curPlayer;
+			risk.defenseNum = 0;
+			risk.attackNum = 0;
+			AttackButton.setText("Attack");
+			EndButton.setVisible(true);
+			FortifyButton.setVisible(true);
+			statusLabel.setText("What would you like to do?");
+			jPanel1.repaint();
+			Utility.writeLog("Attack operation cancelled");
+		}
+		// AttackButton.setText("Retreat");
+		risk.notifyPhaseViewChange();
+	}
+
+	/**
+	 * End button mouse clicked.
+	 */
+	private void EndButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_EndButtonMouseClicked
+		risk.nextPlayer();
+		risk.setState(RiskGameModel.START_TURN);
+		// risk.gamePhaseActive(0, 0);
+		risk.curPlayer.startTurn(risk);
+		risk.active = risk.curPlayer;
+		jPanel3.repaint();
+		jPanel1.repaint();
+		statusLabel.setText("Recieved a bonus of " + risk.curPlayer.getNumberOfArmies());
+		AttackButton.setVisible(false);
+		EndButton.setVisible(true);
+		FortifyButton.setVisible(false);
+		risk.drawn = false;
+		Utility.writeLog("Current player turn ends");
+	}
+
+	// private void gamePausePlay() {
+	// Thread.sleep(millis);
+	// }
+
+	/**
+	 * Fortify button mouse clicked.
+	 */
+	private void FortifyButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_FortifyButtonMouseClicked
+		risk.setState(RiskGameModel.FORTIFY);
+		risk.notifyPhaseViewChange();
+		statusLabel.setText("Select a country move armies from");
+		Utility.writeLog("Fortify Phase entered");
+	}
+
+	/**
+	 * Card button mouse clicked.
+	 */
+	private void CardButtonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_CardButtonMouseClicked
+		// risk.setState(RiskGameModel.TRADE_CARDS);
+		GenerateCardPanel();
+		toggleCardButtonsPanel();
+		jPanel1.repaint();
+	}
+
+	/**
+	 * Toggle card buttons panel.
+	 *
+	 * @return the boolean
+	 */
+	private Boolean toggleCardButtonsPanel() {
+		// TODO Auto-generated method stub
+		if (risk.getState() == RiskGameModel.REINFORCE || risk.getState() == RiskGameModel.START_TURN) {
+			cardStatusLabel.setText("");
+			statusPanel.repaint();
+			return true;
+
+		} else {
+			cardStatusLabel.setText("Card can be traded only during reinforcement.");
+			statusPanel.repaint();
+			return false;
+		}
+	}
+
+	/**
+	 * Show GUI.
+	 */
+	public static void ShowGUI() {
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				new RiskController().setVisible(true);
+			}
+		});
+	}
+
+	private int i;
+	private JPanel controlPanel1;
+
+	/** The Attack button. */
+	// Variables declaration - do not modify//GEN-BEGIN:variables
+	private javax.swing.JButton AttackButton;
+
+	/** The Card button. */
+	private javax.swing.JButton CardButton;
+
+	/** The End button. */
+	private javax.swing.JButton EndButton;
+
+	/** The End button. */
+	private javax.swing.JButton SaveButton;
+
+	/** The Fortify button. */
+	private javax.swing.JButton FortifyButton;
+	/*
+	 * private javax.swing.JPanel jPanel1;
+	 */private RiskMapPanelViewController jPanel1;
+	/*
+	 * private javax.swing.JPanel jPanel3;
+	 */ private RiskPlayerPanelViewController jPanel3;
+	private javax.swing.JLabel statusLabel;
+	// End of variables declaration//GEN-END:variables
+
+	public void mouseClicked(MouseEvent me) {
+		int x_coordinate = me.getX();
+		int y_coordinate = me.getY();
+
+		risk.xCoordinate = x_coordinate; // Strategy
+		risk.yCoordinate = y_coordinate;
+
+		String name;
+		String out;
+
+		if (risk.getState() == RiskGameModel.NEW_GAME) { // 0
+			// startup
+			System.out.println("status " + risk.getState());
+			risk.gamePhaseSetup(x_coordinate, y_coordinate);
+			name = risk.curPlayer.getName();
+			statusLabel.setText("Place an army on a unoccupied territory");
+		}
+
+		if (risk.getState() == RiskGameModel.INITIAL_REINFORCE) { // 1
+			// startup
+			System.out.println("status " + risk.getState());
+			risk.gamePhaseSetup(x_coordinate, y_coordinate);
+			name = risk.curPlayer.getName();
+			statusLabel.setText("Place an army on a territory you occupy");
+			Utility.writeLog("initial reinforcement stage");
+		}
+
+		if (risk.getState() == RiskGameModel.ATTACK) {
+			risk.notifyPhaseViewChange();
+			name = risk.curPlayer.getName();
+
+			out = risk.gamePhaseActive(x_coordinate, y_coordinate);
+			risk.notifyPhaseViewChange();
+
+		}
+		if (risk.getState() == RiskGameModel.START_TURN) {
+			risk.gamePhaseActive(x_coordinate, y_coordinate);
+			risk.active = risk.curPlayer;
+			name = risk.curPlayer.getName();
+			statusLabel.setText("Recieved a bonus of " + risk.curPlayer.getNumberOfArmies());
+			Utility.writeLog(name + " got bonus armies");
+		}
+
+		if (risk.getState() == RiskGameModel.REINFORCE) {
+
+			name = risk.curPlayer.getName();
+			risk.gamePhaseActive(x_coordinate, y_coordinate);
+			risk.notifyPhaseViewChange();
+			Utility.writeLog(name + " got" + risk.curPlayer.getNumberOfArmies() + " left to place");
+			statusLabel.setText("You have " + risk.curPlayer.getNumberOfArmies() + " left to place");
+			if (risk.curPlayer.getNumberOfArmies() == 0) {
+				risk.setState(RiskGameModel.ACTIVE_TURN);
+				Utility.writeLog(name + " entered active turn");
+			}
+
+		}
+
+		if (risk.getState() == RiskGameModel.START_TURN) {
+			risk.gamePhaseActive(x_coordinate, y_coordinate);
+			risk.active = risk.curPlayer;
+			name = risk.curPlayer.getName();
+			statusLabel.setText("Recieved a bonus of " + risk.curPlayer.getNumberOfArmies());
+		}
+
+		if (risk.getState() == RiskGameModel.ACTIVE_TURN) {
+			name = risk.curPlayer.getName();
+			statusLabel.setText("What would you like to do?");
+			EndButton.setVisible(true);
+			FortifyButton.setVisible(true);
+			AttackButton.setText("Attack");
+
+			AttackButton.setVisible(true);
+
+		}
+
+		if (risk.getState() == RiskGameModel.ATTACKING) {
+			name = risk.curPlayer.getName();
+			AttackButton.setText("Retreat");
+			statusLabel.setText("Select an opposing territory");
+			out = risk.gamePhaseActive(x_coordinate, y_coordinate);
+			Utility.writeLog(name + " entered attacking phase.");
+			// System.out.println(out);
+			risk.notifyPhaseViewChange();
+		}
+
+		if (risk.getState() == RiskGameModel.ATTACK_PHASE) {
+			int defenseArmies = risk.defenseTerritory.getArmies();
+			int attackArmies = risk.aTerritory.getArmies();
+
+			if (Integer.valueOf(risk.gamePhaseActive(x_coordinate, y_coordinate)) > 0) {
+				if (defenseArmies - risk.defenseTerritory.getArmies() == 1) {
+					statusLabel.setText(risk.curPlayer.getName() + " has destroyed an army");
+					// Utility.writeLog(risk.curPlayer.getName() + " has destroyed an army");
+				} else if (defenseArmies - risk.defenseTerritory.getArmies() == 2) {
+					statusLabel.setText(risk.curPlayer.getName() + " has destroyed two armies");
+					// Utility.writeLog(risk.curPlayer.getName() + " has destroyed two armies");
+				} else if (attackArmies - risk.aTerritory.getArmies() == 1) {
+					statusLabel.setText(risk.curPlayer.getName() + " has lost an army");
+					// Utility.writeLog(risk.curPlayer.getName() + " has lost an army");
+				} else if (attackArmies - risk.aTerritory.getArmies() == 2) {
+					statusLabel.setText(risk.curPlayer.getName() + " has lost two armies");
+					// Utility.writeLog(risk.curPlayer.getName() + " has lost two armies");
+				}
+
+				if (risk.aTerritory.getArmies() == 1) {
+					risk.setState(RiskGameModel.ACTIVE_TURN);
+					statusLabel.setText(risk.curPlayer.getName() + " has lost the battle");
+					AttackButton.setText("Attack");
+					FortifyButton.setVisible(true);
+					EndButton.setVisible(true);
+					risk.defenseNum = 0;
+					risk.attackNum = 0;
+					risk.defenseTerritory = null;
+					risk.aTerritory = null;
+				}
+			}
+		} // End attackPhase
+
+		if (risk.getState() == RiskGameModel.DEFEATED) {
+			setState(RiskGameModel.ACTIVE_TURN);
+		}
+
+		if (risk.getState() == RiskGameModel.CAPTURE) {
+
+			statusLabel.setText("Select number of armies to move to " + risk.defenseTerritory.getName());
+			AttackButton.setVisible(false);
+			AttackButton.setText("Attack");
+
+			statusLabel.setText(risk.gamePhaseActive(x_coordinate, y_coordinate));
+			if (risk.xCoordinate > 460 && risk.xCoordinate < 545) {// move has ben
+				// clicked
+				if (risk.yCoordinate > 325 && risk.yCoordinate < 355) {// then occupy
+					EndButton.setVisible(true);
+					FortifyButton.setVisible(true);
+					if (risk.capture()) {
+						AttackButton.setVisible(false);
+						FortifyButton.setVisible(false);
+						statusLabel.setText(risk.getCurrentPlayer().getName() + " has won the game");
+						CardButton.setVisible(false);
+						EndButton.setVisible(false);
+						JOptionPane.showMessageDialog(null, risk.getCurrentPlayer().getName() + " has won the game",
+								"Alert", JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+			}
+		}
+
+		if (risk.getState() == RiskGameModel.FORTIFY) {
+			risk.gamePhaseActive(x_coordinate, y_coordinate);
+			statusLabel.setText("Select a country to move armies too");
+
+		}
+
+		if (risk.getState() == RiskGameModel.FORTIFYING) {
+			risk.gamePhaseActive(x_coordinate, y_coordinate);
+		}
+
+		if (risk.getState() == RiskGameModel.FORTIFY_PHASE) {
+			statusLabel.setText(risk.gamePhaseActive(x_coordinate, y_coordinate));
+			if (risk.xCoordinate > 460 && risk.xCoordinate < 545) {
+				if (risk.yCoordinate > 325 && risk.yCoordinate < 355) {
+					AttackButton.setVisible(false);
+					EndButton.setVisible(true);
+					FortifyButton.setVisible(false);
+				}
+			}
+		}
+
+		if (risk.getState() == RiskGameModel.TRADE_CARDS) {
+			statusLabel.setText("You have to trade your cards to proceed!!!");
+		} // end trade cards
+
+		System.out.println("(" + x_coordinate + ", " + y_coordinate + ")");
+
+		jPanel1.repaint();
+		jPanel3.repaint();
+
+	}
+
+	/**
+	 * Generate card panel.
+	 */
+	public void GenerateCardPanel() {
+		JFrame cardsFrame;
+		JPanel cardPanel, cardbuttonsPanel;
+		JButton OKButton;
+
+		risk.lstTradedCards = new ArrayList<RiskCardModel>();
+
+		cardsFrame = new JFrame("Trade Cards");
+		cardsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		cardsFrame.setResizable(false);
+
+		statusPanel = new JPanel();
+		statusPanel.setLayout(new GridLayout(0, 1));
+		cardStatusLabel = new JLabel("Please select the any 3 cards you want to trade");
+		statusPanel.add(cardStatusLabel);
+		cardsFrame.add(statusPanel, BorderLayout.NORTH);
+
+		cardPanel = new JPanel();
+		GridLayout experimentLayout = new GridLayout(0, 2);
+		cardPanel.setLayout(experimentLayout);
+
+		for (int i = 0; i <= risk.curPlayer.getCard().size() - 1; i++) {
+			JButton jbn = new JButton(risk.curPlayer.getCard().get(i).toString().split("-")[0]);
+			jbn.setName(risk.curPlayer.getCard().get(i).toString().split("-")[1] + "-"
+					+ risk.curPlayer.getCard().get(i).toString().split("-")[2]);
+			cardPanel.add(jbn);
+
+			jbn.addMouseListener(new java.awt.event.MouseAdapter() {
+				public void mouseClicked(java.awt.event.MouseEvent evt) {
+					if (jbn.isEnabled()) {
+						risk.lstTradedCards.add(new RiskCardModel(Integer.valueOf(jbn.getName().split("-")[0]),
+								jbn.getName().split("-")[1]));
+						jbn.setEnabled(false);
+						cardStatusLabel.setText(String.valueOf(risk.lstTradedCards.size()));
+					}
+
+					else {
+						jbn.setEnabled(true);
+
+						if (isAlreadyAdded(jbn)) {
+							for (RiskCardModel card : risk.lstTradedCards) {
+								if (card.card_type.equals(jbn.getName().split("-")[1])
+										&& card.territory == Integer.valueOf(jbn.getName().split("-")[0])) {
+									risk.lstTradedCards.remove(card);
+									break;
+								}
+							}
+							cardStatusLabel.setText(String.valueOf(countTradeCards));
+						}
+					}
+				}
+			});
+		}
+		cardsFrame.add(cardPanel, BorderLayout.CENTER);
+
+		cardbuttonsPanel = new JPanel();
+		cardbuttonsPanel.setLayout(new GridLayout(0, 2));
+		OKButton = new JButton("OK");
+		cardbuttonsPanel.add(new Label(""));
+		cardbuttonsPanel.add(OKButton);
+
+		cardsFrame.add(cardbuttonsPanel, BorderLayout.SOUTH);
+
+		cardsFrame.pack();
+		cardsFrame.setVisible(true);
+
+		OKButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				cardsOKButtonPressed();
+			}
+		});
+	}
+
+	/**
+	 * Cards OK button pressed.
+	 */
+	public void cardsOKButtonPressed() { // Logic to add armies!
+		int count;
+		ArrayList<RiskCardModel> cardsRemoved = new ArrayList<RiskCardModel>();
+		if (toggleCardButtonsPanel())
+			if (risk.isTradedCardSetValid()) {
+				cardStatusLabel.setText("Success!");
+				if (risk.doesCardMatchCurrentPlayerTerritory() > 0) {
+					count = RiskGameModel.fetchTradedArmiesCount() + 2;
+				} else {
+					count = RiskGameModel.fetchTradedArmiesCount();
+				}
+				risk.curPlayer.setArmiesRecivedByTradingCards(count);
+				risk.curPlayer.addArmies(count);
+
+				cardsRemoved.addAll(risk.lstTradedCards);
+				risk.looseCard(cardsRemoved);
+
+				cardStatusLabel.setText("Success");
+				risk.setState(RiskGameModel.REINFORCE); // allowing the player
+				risk.notifyPhaseViewChange(); // to
+												// set the armies after
+												// trading the card
+				statusLabel.setText("You have " + risk.curPlayer.getNumberOfArmies() + " left to place");
+				jPanel3.repaint();
+			} else
+				cardStatusLabel.setText("Please select only/atleast three cards!");
+	}
+
+	/**
+	 * Checks if is already added.
+	 *
+	 * @return true, if is already added
+	 */
+	private boolean isAlreadyAdded(JButton jbn) {
+
+		for (RiskCardModel card : risk.lstTradedCards) {
+			if (card.territory == Integer.valueOf(jbn.getName().split("-")[0])
+					&& card.card_type.equals(jbn.getName().split("-")[1]))
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Creates the layout.
+	 */
+	private void createLayout(JComponent... arg) {
+
+		JPanel pane = (JPanel) getContentPane();
+		GroupLayout gl = new GroupLayout(pane);
+		pane.setLayout(gl);
+
+		pane.setToolTipText("Content pane");
+
+		gl.setAutoCreateContainerGaps(true);
+
+		gl.setHorizontalGroup(gl.createSequentialGroup().addComponent(arg[0]).addGap(200));
+
+		gl.setVerticalGroup(gl.createSequentialGroup().addComponent(arg[0]).addGap(120));
+
+		pack();
+	}
+
+	void saySomething(String desc, MouseEvent e) {
+		// jTextArea1.append(desc + " (" + e.getX() + "," + e.getY() + ")\n");
+	}
+
+	public void mousePressed(MouseEvent me) {
+	}
+
+	public void mouseReleased(MouseEvent me) {
+	}
+
+	public void mouseEntered(MouseEvent me) {
+	}
+
+	public void mouseExited(MouseEvent me) {
+	}
+
+	public void fortifyPhase(int x, int y) {
+		if (risk.getState() == RiskGameModel.FORTIFY_PHASE) {
+			int from = risk.aTerritory.getArmies();
+
+			if (y > 230 && y < 257) {// if y is correct
+				if (x > 600 && x < 650)// if max
+					if (risk.defenseNum == (from - 1))
+						statusLabel.setText("Maximum units already selected");
+					else
+						risk.defenseNum = (from - 1);// all but one
+				if (x > 520 && x < 570) { // if inc
+					if (risk.defenseNum < (from - 1))
+						risk.defenseNum++;
+					else
+						statusLabel.setText("Maximum units already selected");
+				} // end if inc
+				if (x > 440 && x < 490) {// if dec
+					if (risk.defenseNum > (from - 1))
+						risk.defenseNum--;
+					else
+						statusLabel.setText("Minimum units already selected");
+				} // end if add
+				if (x > 360 && x < 410)// min
+					if (risk.defenseNum == 0)
+						statusLabel.setText("Minimum units already selected");
+					else
+						risk.defenseNum = 0;
+			} // end if y coord
+
+			if (x > 460 && x < 545) {// move has ben clicked
+				if (y > 325 && y < 355) {// then occupy the territory
+					risk.aTerritory.looseArmies(risk.defenseNum);
+					risk.defenseTerritory.addArmies(risk.defenseNum);
+					risk.setState(RiskGameModel.ACTIVE_TURN);
+				} // end y
+			} // end x for movwe
+		} // ..fortify phase
+	}
+
+	public void attackPhase(int x, int y) {
+		if (risk.getState() == RiskGameModel.ATTACK_PHASE) {
+			// jInternalFrame1.setVisible(true);
+			int attackArmies = risk.aTerritory.getArmies();
+			int defenseArmies = risk.defenseTerritory.getArmies();
+			int numofatt = 0;
+			// If attackers turn
+			if (risk.active == risk.curPlayer) {
+				if (attackArmies > 3) {
+					if (y > 250 && y < 280) {// if in y coord
+						if (x > 420 && x < 460) // If dice one
+							numofatt = 1;
+						if (x > 480 && x < 520) // if dice two
+							numofatt = 2;
+						if (x > 540 && x < 580)
+							numofatt = 3;
+					} // in y coord
+				} // if attcking with 3
+				if (attackArmies == 3) {// if attakking with two
+					if (y > 250 && y < 280) {
+						if (x > 460 && x < 500)
+							numofatt = 1;
+						if (x > 510 && x < 550)
+							numofatt = 2;
+					} // in y coord
+				} // end if can attack with two
+
+				if (attackArmies == 2) {// can only attack with one
+					if (y > 250 && y < 280) {
+						if (x > 480 && x < 520)
+							numofatt = 1;
+					} // in y
+				} // end only attack with one
+
+				if (numofatt != 0) {// change player is num is selected
+					risk.active = risk.defender;
+					risk.setAttack(numofatt);
+					Utility.writeLog(risk.getCurrentPlayer().getName() + " has " + attackArmies + " armies");
+					Utility.writeLog(risk.getCurrentPlayer().getName() + " attacking with " + numofatt + " armies");
+				}
+
+			} // end attackers turn
+
+			// If defenders turn
+			else if (risk.active == risk.defender) {
+				if (defenseArmies > 1 && risk.attackNum > 1) {
+					if (y > 250 && y < 280) {
+						if (x > 460 && x < 500)
+							numofatt = 1;
+						if (x > 510 && x < 550)
+							numofatt = 2;
+					}
+				} else {
+					if (y > 250 && y < 280) {
+						if (x > 480 && x < 520)
+							numofatt = 1;
+					}
+				}
+
+				// risk.notifyPhaseViewChange();
+				if (numofatt > 0) {
+					risk.setDefend(numofatt);
+					// risk.engageBattle();
+					if (defenseArmies - risk.defenseTerritory.getArmies() == 1) {
+						statusLabel.setText(risk.curPlayer.getName() + " has destroyed an army");
+						Utility.writeLog(risk.curPlayer.getName() + " has destroyed an army");
+					} else if (defenseArmies - risk.defenseTerritory.getArmies() == 2) {
+						statusLabel.setText(risk.curPlayer.getName() + " has destroyed two armies");
+						Utility.writeLog(risk.curPlayer.getName() + " has destroyed two armies");
+					} else if (attackArmies - risk.aTerritory.getArmies() == 1) {
+						statusLabel.setText(risk.curPlayer.getName() + " has lost an army");
+						Utility.writeLog(risk.curPlayer.getName() + " has lost an army");
+					} else if (attackArmies - risk.aTerritory.getArmies() == 2) {
+						statusLabel.setText(risk.curPlayer.getName() + " has lost two armies");
+						Utility.writeLog(risk.curPlayer.getName() + " has lost two armies");
+					}
+
+					if (risk.aTerritory.getArmies() == 1) {
+						risk.setState(RiskGameModel.ACTIVE_TURN);
+						statusLabel.setText(risk.curPlayer.getName() + " has lost the battle");
+						AttackButton.setText("Attack");
+						FortifyButton.setVisible(true);
+						EndButton.setVisible(true);
+						risk.defenseNum = 0;
+						risk.attackNum = 0;
+						risk.defenseTerritory = null;
+						risk.aTerritory = null;
+					}
+				}
+
+			} /// end if defenders turn
+
+		} // End attackPhase
+
+		if (risk.getState() == RiskGameModel.DEFEATED) {
+			setState(RiskGameModel.ACTIVE_TURN);
+		}
+
+		if (risk.getState() == RiskGameModel.CAPTURE) {
+			statusLabel.setText("Select number of armies to move to " + risk.defenseTerritory.getName());
+			AttackButton.setVisible(false);
+			AttackButton.setText("Attack");
+			int max = risk.aTerritory.getArmies() - 1;
+			int min = risk.attackNum;
+			if (y > 230 && y < 257) {// if y is correct
+				if (x > 600 && x < 650)// if max
+					risk.defenseNum = risk.aTerritory.getArmies() - 1; // max
+				if (x > 520 && x < 570) { // if inc
+					if (risk.defenseNum < max)
+						risk.defenseNum++;
+					else
+						statusLabel.setText("Maximum units already selected");
+				} // end if sub
+				if (x > 440 && x < 490) {// if dec
+					if (risk.defenseNum > min)
+						risk.defenseNum--;
+					else
+						statusLabel.setText("Minimum units already selected");
+				} // end if add
+				if (x > 360 && x < 410)// min
+					risk.defenseNum = min;
+			} // end if y coord
+
+			if (x > 460 && x < 545) {// move has ben clicked
+				if (y > 325 && y < 355) {// then occupy the territory
+					AttackButton.setVisible(true);
+					if (risk.defenseNum == 1)
+						statusLabel.setText("1 army moved to " + risk.defenseTerritory.getName());
+					else
+						// statusLabel.setText(risk.defenseNum + " armies moved to " +
+						// risk.dTerritory.getName());
+
+						risk.notifyPhaseViewChange();
+					risk.setAttackDieArray(null);
+					risk.setDefenceDieArray(null);
+					Utility.writeLog(risk.getCurrentPlayer().getName() + " has " + risk.defenseNum + " armies moved to "
+							+ risk.defenseTerritory.getName());
+					// EndButton.setVisible(true);
+					// FortifyButton.setVisible(true);
+					risk.capture();
+				}
+			}
+			// risk.notifyPhaseViewChange();
+		} // end capturing
+
+	}
+
+	private JLabel cardStatusLabel;
+	private RiskGameModel risk;
+	private JFrame jfmCard;
+	private JPanel jp, statusPanel;
+	private int countTradeCards = 0;
+	// private List<RiskCardModel> lstTradedCards = new ArrayList<RiskCardModel>();
+	// moved to RiskGameModel
+	public static Boolean isBaseMapEdited = false;
+	public static Boolean isSavedGameLoaded = false;
+	private JFrame cardsFrame;
+	private JPanel cardbuttonsPanel;
+}

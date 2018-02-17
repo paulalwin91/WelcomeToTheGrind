@@ -1,0 +1,52 @@
+package javaapplication2;
+
+public class BinaryTree {
+	static Node root;
+
+	public static void main(String[] args) {
+
+	}
+
+	public static void addNode(int nodeValue, Node currentNode) {
+
+		if (root == null) {
+			root = new Node(nodeValue, 0);
+			return;
+		}
+
+		currentNode = root;
+		if (nodeValue > currentNode.Key) {
+			if (currentNode.right == null) {
+				currentNode.right = new Node(nodeValue, currentNode.level + 1);
+				return;
+			} else {
+				currentNode = currentNode.right;
+				addNode(nodeValue, currentNode);
+			}
+		}
+
+		if (nodeValue < currentNode.Key) {
+			if (currentNode.left == null) {
+				currentNode.left = new Node(nodeValue, currentNode.level + 1);
+				return;
+			} else {
+				currentNode = currentNode.left;
+				addNode(nodeValue, currentNode);
+			}
+		}
+	}
+
+	
+	private static void printTree(Node root, int level) {
+
+		if (root.level == level) {
+			System.out.print(root.Key + " ");
+		}
+		if (root.left != null)
+			printTree(root.left, level);
+
+		if (root.right != null)
+			printTree(root.right, level);
+
+	}
+}

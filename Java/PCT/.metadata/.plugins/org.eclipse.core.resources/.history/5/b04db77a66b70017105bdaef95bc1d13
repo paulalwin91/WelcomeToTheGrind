@@ -1,0 +1,20 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.URL;
+
+public class ChercherMaIP {
+	public static void main(String[] args)
+	{
+		String Url'
+		BufferedReader brInput = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Hey there, enter a website name like www.abc.com");
+		
+		
+		
+		InetAddress address = InetAddress.getByName(new URL().getHost());
+
+
+		String ip = address.getHostAddress();
+	}
+}

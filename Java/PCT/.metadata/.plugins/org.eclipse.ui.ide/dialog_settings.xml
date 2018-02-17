@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="C:\Users\Admin\Downloads\RiskGameTeam8-3dcliff_logic\RiskGameTeam8-3dcliff_logic"/>
+		<item value="F:\Work\Concordia\SOEN 6441\Git - Risk\Risk\RiskGameTeam8-RiskStrategyImplementation"/>
+		<item value="F:\Work\Concordia\SOEN 6441\Git - Risk\Risk\RiskGameTeam8 - Master - Copy"/>
+		<item value="F:\Work\Concordia\SOEN 6431\violetumleditor-master\violetumleditor-master"/>
+		<item value="C:\Users\Admin\Desktop\RiskGameTeam8-master\RiskGameTeam8-master"/>
+		<item value="F:\Work\Concordia\SOEN 6441\Git - Risk\Risk\RiskGameTeam8 - Master"/>
+		<item value="F:\Work\Concordia\SOEN 6441\Git - Risk\Risk\RiskGameTeam8 - PhaseFunctionality"/>
+		<item value="F:\Work\PCT\District3\test\datapopulator"/>
+		<item value="F:\Work\PCT\District3\datapopulator"/>
+		<item value="F:\Work\Concordia\SOEN 6441\Git - Risk\MyRisk\RiskGameTeam8-Local"/>
+		<item value="F:\Work\Concordia\SOEN 6441\Git - Risk\MyRisk\RiskGameTeam8"/>
+		<item value="F:\Work\Concordia\SOEN 6441\Git - Risk\MyRisk\RiskGameTeam8-master\RiskGameTeam"/>
+		<item value="F:\Work\Concordia\SOEN 6441\Git - Risk\Risk\RiskGameTeam8"/>
+		<item value="F:\Work\Concordia\SOEN 6441\Git - Risk\MyRisk\RiskGameTeam8-master\RiskGameTeam8-master"/>
+		<item value="F:\Work\Concordia\SOEN 6441"/>
+		<item value="F:\Work\Concordia\SOEN 6441\Git - Risk\Risk\RiskGameTeam8-master\RiskGameTeam8-master"/>
+		<item value="F:\Work\Concordia\SOEN 6441\Git - Risk"/>
+		<item value="F:\Work\Concordia\SOEN 6441\Git - Risk\RiskGameTeam8\Risk-master"/>
+		<item value="F:\Work\Concordia\SOEN 6441\JavaRisk-master (2)\JavaRisk-master"/>
+	</list>
+	<section name="CleanDialogSettings">
+		<item value="828" key="DIALOG_WIDTH"/>
+		<item value="false" key="TOGGLE_SELECTED"/>
+		<item value="480" key="DIALOG_HEIGHT"/>
+		<item value="546" key="DIALOG_X_ORIGIN"/>
+		<item value="190" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="org.eclipse.ui.dialogs.FilteredResourcesSelectionDialog">
+		<item value="false" key="FilterByLocation"/>
+		<item value="true" key="ShowStatusLine"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0D;&#x0A;&lt;History&gt;&#x0D;&#x0A;&lt;historyRootNode/&gt;&#x0D;&#x0A;&lt;/History&gt;" key="History"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0D;&#x0A;&lt;workingSet workingSetName=&quot;&quot;/&gt;" key="WorkingSet"/>
+		<item value="false" key="ShowDerived"/>
+		<section name="DialogBoundsSettings">
+			<item value="600" key="DIALOG_WIDTH"/>
+			<item value="1|Segoe UI|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+			<item value="500" key="DIALOG_HEIGHT"/>
+			<item value="671" key="DIALOG_X_ORIGIN"/>
+			<item value="188" key="DIALOG_Y_ORIGIN"/>
+		</section>
+	</section>
+</section>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="575" key="DIALOG_X_ORIGIN"/>
+		<item value="325" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="aListAncestors" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="aListAncestors"/>
+			<item value="HashSet"/>
+			<item value="implements IConstituent"/>
+			<item value="hashset"/>
+			<item value="get"/>
+			<item value="add"/>
+			<item value="ass"/>
+			<item value="put"/>
+			<item value="copyOfListAncestors"/>
+			<item value="cache"/>
+			<item value="protectedMembers"/>
+			<item value="qualifiedMethodsMetrics"/>
+			<item value="Map"/>
+			<item value="useRelationships"/>
+			<item value="HashMap"/>
+		</list>
+		<list key="replacehistory">
+			<item value=""/>
+			<item value="riskGameModel"/>
+			<item value="Aggressive"/>
+			<item value="xCoordinate"/>
+			<item value="yCoordinate"/>
+			<item value="risk"/>
+			<item value="risk."/>
+			<item value="riskGameModel."/>
+			<item value="riskGameModel.aTerritory"/>
+			<item value="playerDominationViewFrame"/>
+			<item value="playerDominationViewTextArea"/>
+			<item value="playerDominationViewPanel"/>
+			<item value="double"/>
+			<item value="EndButton.setVisible(false)"/>
+			<item value="FortifyButton.setVisible(false)"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="479" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="293" key="DIALOG_HEIGHT"/>
+		<item value="1452" key="DIALOG_X_ORIGIN"/>
+		<item value="244" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>

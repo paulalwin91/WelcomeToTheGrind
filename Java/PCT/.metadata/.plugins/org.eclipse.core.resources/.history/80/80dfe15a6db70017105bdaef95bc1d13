@@ -1,0 +1,36 @@
+import java.util.List;
+
+public class MoiThread implements Runnable{
+    private String m_intialCharacter;
+    private List<String> m_airports;
+   	
+	public MoiThread(String intialCharacter, List<String> airports) {
+		// TODO Auto-generated constructor stub
+	
+		for(String str: airports)
+		{
+			if(str.startsWith(intialCharacter))
+				m_airports.add(str);
+		} 
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		List<String> origin = m_airports;
+        for(String org : origin)
+        {
+        	if(!org.equals(""))
+        	for(String des: dest)
+        	{
+        		if(!des.equals("")) {
+        		distance = FetchDistance(org, des);
+        		brWriter.write(org + "," + des + "," + distance);
+        		brWriter.newLine();
+        		}
+              }
+        }
+		
+	}
+
+	
+}

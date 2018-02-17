@@ -1,0 +1,17 @@
+package javaapplication2;
+
+public class Equivalence {
+
+	static int level = 3;
+	static Node root;
+	public static void main(String[] args) {
+		createTree(root);
+	}
+	private static void createTree(Node currentNode) {
+		if(root == null) {
+			root = new Node(0,0,null);
+			return;
+		}
+		
+	}
+}

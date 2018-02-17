@@ -1,0 +1,8 @@
+import java.io.BufferedReader;
+
+public class ChercherMaIP {
+	public static void main(String[] args)
+	{
+		BufferedReader brInput = new BufferedReader(System.in)
+	}
+}

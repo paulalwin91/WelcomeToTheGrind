@@ -1,0 +1,15 @@
+package javaapplication2;
+
+import java.util.HashMap;
+
+public class HashIt {
+	public static void main(String[] args) {
+		HashMap<String,String> hs = new HashMap<String,String>();
+		hs.put("a", "apple");
+		hs.put("b","basket");
+		hs.put("c","cast");
+		hs.put("d","dust");
+		
+		Iterator ic = hs.keySet().iterator();
+	}
+}	

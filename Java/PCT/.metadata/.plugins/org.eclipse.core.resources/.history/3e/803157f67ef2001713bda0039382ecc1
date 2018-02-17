@@ -1,0 +1,16 @@
+package dynamix;
+
+public class KnapSac {
+	class item {
+		int weight;
+		int value;
+		public item(int w, int v) {
+			this.weight = w;
+			this.value = v;
+		}
+	}
+	
+	public static void main(String[] args) {
+		item[] items = new item[4];
+	}
+}

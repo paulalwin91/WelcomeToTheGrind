@@ -1,0 +1,6 @@
+1511201975742	Delete element
+1511202324801	Rename type 'Strategy'
+1511202361449	Rename type 'IStrategy'
+1511202400016	Encapsulate field 'strategy'
+1511207548615	Extract method 'occupyTerritoryByPlayer'
+1511491327717	Delete element

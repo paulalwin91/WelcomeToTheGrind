@@ -1,0 +1,22 @@
+package dynamix;
+
+import java.util.ArrayList;
+
+public class KnapSac {
+	static class item {
+		int weight;
+		int value;
+
+		public item(int w, int v) {
+			this.weight = w;
+			this.value = v;
+		}
+	}
+
+	public static void main(String[] args) {
+		KnapSac k = new KnapSac();
+		ArrayList<item> items = new ArrayList<item>();
+		items.add(new item(2,6));
+
+	}
+}

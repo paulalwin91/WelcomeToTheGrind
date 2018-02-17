@@ -1,0 +1,60 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
+public class MoiThread implements Runnable{
+    private String m_intialCharacter;
+    private List<String> m_airports;
+   	private DistanceFinderDriver m_Dfd;
+   	private BufferedWriter brWriter;
+	File newFile;
+    FileWriter fr;
+
+   	
+   	
+	public MoiThread(String intialCharacter, List<String> airports,DistanceFinderDriver distanceFinder) throws IOException {
+		for(String str: airports)
+		{
+			if(str.startsWith(intialCharacter))
+				m_airports.add(str);
+		} 
+		m_Dfd = distanceFinder;
+		newFile = new File("C:\\Users\\Admin\\Desktop\\Documents\\Text\\Distance-" + intialCharacter + ".txt");
+		fr = new FileWriter(newFile,false);
+		brWriter = new BufferedWriter(fr);		
+	}
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		List<String> origin = m_airports;
+		List<String> destination = m_airports;
+		try {	
+		
+        for(String org : origin)
+        {
+        	for(String des: destination)
+        	{
+        		String distance;
+        		if(!des.equals("")) {
+        		distance = m_Dfd.FetchDistance(org, des);
+
+					brWriter.write(org + "," + des + "," + distance);
+	        		brWriter.newLine();		
+        		}
+              }
+        }        
+        brWriter.flush();
+        brWriter.close();               	
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
+}

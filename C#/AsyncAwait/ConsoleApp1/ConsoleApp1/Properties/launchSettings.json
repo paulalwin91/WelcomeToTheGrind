@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ConsoleApp1": {
+      "commandName": "Project",
+      "commandLineArgs": "\"F:\\Work\\D3\\Code\\database\\files\\Crawled\\Destination\\routesUpdate10000aFriday.dat\""
+    }
+  }
+}

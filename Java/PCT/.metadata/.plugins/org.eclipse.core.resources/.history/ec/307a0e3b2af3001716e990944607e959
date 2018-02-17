@@ -1,0 +1,204 @@
+package javaapplication2;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Queue;
+
+public class Equivalence {
+
+	static int level = 1;
+	static Node root;
+	static int index = 1;
+	int[] iList = new int[level];
+	int[] jList = new int[level];
+
+	static Queue<Node> queue = new Queue<Node>() {
+
+		@Override
+		public <T> T[] toArray(T[] a) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Object[] toArray() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public int size() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public boolean retainAll(Collection<?> c) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean removeAll(Collection<?> c) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean remove(Object o) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public Iterator<Node> iterator() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public boolean isEmpty() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean containsAll(Collection<?> c) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean contains(Object o) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public void clear() {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public boolean addAll(Collection<? extends Node> c) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public Node remove() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Node poll() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Node peek() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public boolean offer(Node e) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public Node element() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public boolean add(Node e) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+	};
+
+	public static void main(String[] args) {
+		// root = new Node(0, 0, null);
+		createTree(root);
+		queue.add(root);
+		updateValues();
+		System.out.println(findLCD(11, 2));
+	}
+
+	private static int findLCD(int i, int j) {
+		int[] iList = new int[level];
+		int[] jList = new int[level];
+
+		iList = findAncestors(i, root);
+		jList = findAncestors(j, root);
+
+		for (int i1 = 0; i1 < iList.length; i1++)
+			for (int j1 = 0; j1 < jList.length; j1++) {
+				if (iList[i1] == jList[j1])
+					return iList[i1];
+			}
+
+		return 0;
+	}
+
+	private static void findAncestors(int i, Node currentNode) {
+		
+		if (currentNode != null)
+			return;
+
+		if (currentNode.Key == i) {
+			recurAns(i, currentNode);
+		}
+
+		findAncestors(i, currentNode.left);
+		findAncestors(i, currentNode.right);
+	}
+
+	private static void recurAns(int i, Node currentNode) {
+		int index = 0;
+		while (currentNode == null) {
+			iList[index] = currentNode.Key;
+			index++;
+			currentNode = currentNode.pr;
+		}
+		return iList;		
+	}
+
+	private static void updateValues() {
+		Node r = queue.poll();
+		if (r == null)
+			return;
+
+		r.Key = index++;
+		if (r.left != null)
+			queue.add(r.left);
+		if (r.right != null)
+			queue.add(r.right);
+		updateValues();
+	}
+
+	private static void createTree(Node currentNode) {
+		if (root == null) {
+			root = new Node(0, 0, null);
+			createTree(root);
+		}
+
+		if (currentNode == null)
+			return;
+
+		if (currentNode.level == level)
+			return;
+
+		currentNode.left = new Node(0, currentNode.level + 1, currentNode);
+		currentNode.right = new Node(0, currentNode.level + 1, currentNode);
+
+		createTree(currentNode.left);
+		createTree(currentNode.right);
+	}
+}

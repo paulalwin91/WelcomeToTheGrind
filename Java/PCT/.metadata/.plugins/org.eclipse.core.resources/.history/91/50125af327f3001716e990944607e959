@@ -1,0 +1,80 @@
+package javaapplication2;
+
+import java.util.Queue;
+
+public class Equivalence {
+
+	static int level = 3;
+	static Node root;
+	static int index = 1;
+	static Queue<Node> queue;
+
+	public static void main(String[] args) {
+
+		createTree(root);
+		queue.add(root);
+		updateValues();
+		System.out.println(findLCD(11, 2));
+	}
+
+	private static int findLCD(int i, int j) {
+		int[] iList = new int[level];
+		int[] jList = new int[level];
+
+		iList = findAncestors(i,root);
+		jList = findAncestors(j,root);
+		
+		for(int i = 0; i < iList.length; i++)
+			for(int i = 0; i < jList.length; j++)
+			{
+				
+			}
+			
+		return 0;
+	}
+
+	private static int[] findAncestors(int i, Node currentNode) {
+		int[] iList = new int[level];
+		if (currentNode.Key == i) {
+			int index = 0;
+			while (currentNode == null) {
+				iList[index] = currentNode.Key;
+				index++;
+				currentNode = currentNode.pr;
+			}
+			return iList;
+		}
+
+		findAncestors(i, currentNode.left);
+		return findAncestors(i, currentNode.right);
+	}
+
+	private static void updateValues() {
+		Node r = queue.poll();
+		if (r == null)
+			return;
+
+		r.Key = index++;
+		if (r.left != null)
+			queue.add(r.left);
+		if (r.right != null)
+			queue.add(r.right);
+		updateValues();
+	}
+
+	private static void createTree(Node currentNode) {
+		if (root == null) {
+			root = new Node(0, 0, null);
+			createTree(root);
+		}
+
+		if (currentNode.level == level)
+			return;
+
+		currentNode.left = new Node(0, currentNode.level + 1, currentNode);
+		currentNode.right = new Node(0, currentNode.level + 1, currentNode);
+
+		createTree(currentNode.left);
+		createTree(currentNode.right);
+	}
+}

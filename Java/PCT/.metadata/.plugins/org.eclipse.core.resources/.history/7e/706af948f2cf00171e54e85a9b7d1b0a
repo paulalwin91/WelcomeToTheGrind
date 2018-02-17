@@ -1,0 +1,145 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/*
+ * RiskAddPlayerUI.java
+ *
+ * Created on Nov 15, 2010, 12:39:35 PM
+ */
+
+package risk.controller;
+
+import risk.controller.RiskStartGameController;
+import risk.helpers.Utility;
+import risk.controller.RiskStartGameController;
+import risk.model.*;
+import risk.model.strategy.Human;
+
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLabel;
+
+import java.awt.Color;
+
+import javax.swing.JComboBox;
+
+import java.awt.event.ActionListener;
+import java.util.Random;
+import java.awt.event.ActionEvent;
+
+/**
+ * This class is used to add RiskPlayers to the game.
+ * @author Team8
+ */
+public class RiskAddPlayerController extends java.awt.Frame {
+
+	static int noOfPlayers = 3;
+
+	/** Creates new form RiskAddPlayerUI */
+	public RiskAddPlayerController() {
+		initComponents();
+		setLocationRelativeTo(null);
+	}
+
+	boolean added;
+
+	/**
+	 * This method is called from within the constructor to initialize the form.
+	 */
+	private void initComponents() {
+
+		jPanel1 = new javax.swing.JPanel();
+		jButton1 = new javax.swing.JButton();
+		Integer[] numbers = { 3, 4, 5, 6 };
+		JComboBox comboBox = new JComboBox(numbers);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(java.awt.event.WindowEvent evt) {
+				exitForm(evt);
+			}
+		});
+
+		jPanel1.setBackground(new java.awt.Color(1, 1, 1));
+		jPanel1.setName("jPanel1"); // NOI18N
+
+		jButton1.setText("Ok");
+		jButton1.setName("jButton1"); // NOI18N
+		jButton1.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jButton1ActionPerformed(evt);
+			}
+		});
+
+		JLabel lblEnterTheNumber = new JLabel();
+		lblEnterTheNumber.setText("Enter the number of players");
+		lblEnterTheNumber.setName("jLabel1");
+		lblEnterTheNumber.setForeground(new Color(254, 254, 254));
+
+		// JComboBox comboBox = new JComboBox();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				JComboBox cb1 = (JComboBox) event.getSource();
+				noOfPlayers = (Integer) cb1.getSelectedItem();
+			}
+		});
+
+		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+		jPanel1Layout
+		.setHorizontalGroup(
+				jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap(202, Short.MAX_VALUE)
+						.addComponent(lblEnterTheNumber, GroupLayout.PREFERRED_SIZE, 197,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(114))
+				.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap(377, Short.MAX_VALUE)
+						.addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 124,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(12))
+				.addGroup(
+						jPanel1Layout.createSequentialGroup().addGap(239)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(243, Short.MAX_VALUE)));
+		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap().addComponent(lblEnterTheNumber)
+						.addPreferredGap(ComponentPlacement.RELATED).addComponent(comboBox, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGap(12).addComponent(jButton1).addGap(20)));
+		jPanel1.setLayout(jPanel1Layout);
+
+		add(jPanel1, java.awt.BorderLayout.CENTER);
+
+		pack();
+	}
+
+	/** Exit the Application */
+	private void exitForm(java.awt.event.WindowEvent evt) {
+		setVisible(false);
+	}
+
+	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+
+		if (RiskGameModel.removeAllPlayer())
+			System.out.println("all players removed");
+
+//		for (int i = 1; i <= noOfPlayers; i++) {
+//			RiskGameModel.addPlayer("Player_" + i);
+//			added = true;
+//		}
+		RiskGameModel.addPlayer("Player_" + 1,new Human());
+		RiskGameModel.addPlayer("Player_" + 1,new Random());
+		RiskGameModel.addPlayer("Player_" + 1,new Random());
+
+		if (added == true) {
+			System.out.println(" added.");
+			setVisible(false);
+			RiskStartGameController.jButton1.setEnabled(true);
+			Utility.writeLog("All players Added");
+		}
+	}
+
+	private javax.swing.JButton jButton1;
+	private javax.swing.JPanel jPanel1;
+}

@@ -1,0 +1,11 @@
+package dynamix;
+
+public class KnapSac {
+	class item {
+		int weight;
+		int value;
+		public item(int w, int v) {
+			
+		}
+	}
+}

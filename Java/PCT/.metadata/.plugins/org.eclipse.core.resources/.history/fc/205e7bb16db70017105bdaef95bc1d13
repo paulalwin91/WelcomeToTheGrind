@@ -1,0 +1,38 @@
+import java.util.List;
+
+public class MoiThread implements Runnable{
+    private String m_intialCharacter;
+    private List<String> m_airports;
+   	private DistanceFinderDriver m_Dfd;
+	public MoiThread(String intialCharacter, List<String> airports,DistanceFinderDriver distanceFinder) {
+		// TODO Auto-generated constructor stub
+		m_Dfd = distanceFinder;
+		for(String str: airports)
+		{
+			if(str.startsWith(intialCharacter))
+				m_airports.add(str);
+		} 
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		List<String> origin = m_airports;
+		List<String> destination = m_airports;
+		
+		
+        for(String org : origin)
+        {
+        	for(String des: destination)
+        	{
+        		if(!des.equals("")) {
+        		distance = m_Dfd.FetchDistance(org, des);
+        		brWriter.write(org + "," + des + "," + distance);
+        		brWriter.newLine();
+        		}
+              }
+        }
+		
+	}
+
+	
+}

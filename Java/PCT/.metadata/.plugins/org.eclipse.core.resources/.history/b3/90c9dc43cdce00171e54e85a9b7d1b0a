@@ -1,0 +1,10 @@
+package risk.model.interfaces;
+
+public interface StrategyInterface {
+
+	public void attack(int territory,RiskGameModel riskGameModel);
+
+	public void reinforce();
+
+	public void fortify();
+}

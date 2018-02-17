@@ -1,0 +1,17 @@
+package javaapplication2;
+
+public class BinaryTree {
+	static Node root;
+	
+	public static void main(String[] args) {
+		
+	}
+	
+	
+	public static Node addNode(int nodeValue) {
+		
+		if(root == null)
+			root = new Node(nodeValue);
+		
+	}
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;View.DisplayMessageView&apos; to &apos;ReceptionistDisplayMessageView&apos;&#x0D;&#x0A;- Original project: &apos;JavaApplication2&apos;&#x0D;&#x0A;- Original element: &apos;View.DisplayMessageView&apos;&#x0D;&#x0A;- Renamed element: &apos;View.ReceptionistDisplayMessageView&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;DisplayMessageView&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;View{DisplayMessageView.java[DisplayMessageView" matchStrategy="1" name="ReceptionistDisplayMessageView" qualified="false" references="true" similarDeclarations="false" stamp="1507768746392" textual="false" version="1.0"/>
+</session>

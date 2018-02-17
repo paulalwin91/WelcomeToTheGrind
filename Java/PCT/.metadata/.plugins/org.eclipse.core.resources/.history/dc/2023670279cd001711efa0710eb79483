@@ -1,0 +1,14 @@
+package javaapplication2;
+
+public class Node {
+	
+	public int Key;
+    public Node left,right;
+    public int level;
+	public Node(int nodeValue)
+	{
+		this.Key = nodeValue;
+		this.left = null;
+		this.right = null;
+	}
+}

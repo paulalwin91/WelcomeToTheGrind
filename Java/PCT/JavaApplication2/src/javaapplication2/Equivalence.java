@@ -1,0 +1,91 @@
+package javaapplication2;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Equivalence {
+
+	static int level = 3;
+	static Node root;
+	static int index = 1;
+	static int[] iList = new int[level + 1];
+	static int[] jList = new int[level + 1];
+	static Queue<Node> queue = new LinkedList<Node>();	
+	
+	public static void main(String[] args) {
+		// root = new Node(0, 0, null);
+		createTree(root);
+		queue.add(root); 
+		updateValues();
+		System.out.println(findLCD(11, 2));
+	}
+
+	private static int findLCD(int i, int j) {
+		findAncestors(i, root, iList);
+		findAncestors(j, root, jList);
+
+		for (int i1 = 0; i1 < iList.length; i1++)
+			for (int j1 = 0; j1 < jList.length; j1++) {
+				if (iList[i1] == jList[j1])
+					return iList[i1];
+			}
+
+		return 0;
+	}
+
+	private static void findAncestors(int i, Node currentNode, int[] iList) {
+
+		if (currentNode == null)
+			return;
+
+		if (currentNode.Key == i) {
+			recurAns(i, currentNode, iList);
+		}
+
+		findAncestors(i, currentNode.left, iList);
+		findAncestors(i, currentNode.right, iList);
+	}
+
+	private static void recurAns(int i, Node currentNode, int[] iList) {
+		int index = 0;
+		while (currentNode != null) {
+			iList[index] = currentNode.Key;
+			index++;
+			currentNode = currentNode.pr;
+		}
+	}
+
+	private static void updateValues() {
+		Node r = queue.poll();
+		if (r == null)
+			return;
+
+		r.Key = index++;
+		if (r.left != null)
+			queue.add(r.left);
+		if (r.right != null)
+			queue.add(r.right);
+		updateValues();
+	}
+
+	private static void createTree(Node currentNode) {
+		if (root == null) {
+			root = new Node(0, 0, null);
+			createTree(root);
+		}
+
+		if (currentNode == null)
+			return;
+
+		if (currentNode.level == level)
+			return;
+
+		currentNode.left = new Node(0, currentNode.level + 1, currentNode);
+		currentNode.right = new Node(0, currentNode.level + 1, currentNode);
+
+		createTree(currentNode.left);
+		createTree(currentNode.right);
+	}
+}

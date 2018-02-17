@@ -1,0 +1,13 @@
+package javaapplication2;
+
+public class Node {
+	
+	public String Key;
+    public Node left,right;
+	public Node(int nodeValue)
+	{
+		this.Key = nodeValue;
+		this.left = null;
+		this.right = null;
+	}
+}

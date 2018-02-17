@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete 13 resources" deleteContents="false" description="Delete 13 resources" element1="/violet-framework" element10="/violetproduct-exe" element11="/violetproduct-swing" element12="/violetproduct-web" element13="/violetumleditor-master" element2="/violetplugin-activitydiagram" element3="/violetplugin-classdiagram" element4="/violetplugin-communicationdiagram" element5="/violetplugin-objectdiagram" element6="/violetplugin-sequencediagram" element7="/violetplugin-statediagram" element8="/violetplugin-usecasediagram" element9="/violetproduct-deb" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="13" stamp="1511059703307"/>
+</session>

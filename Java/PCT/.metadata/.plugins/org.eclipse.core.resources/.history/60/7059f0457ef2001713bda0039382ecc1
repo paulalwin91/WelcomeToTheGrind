@@ -1,0 +1,6 @@
+package dynamix;
+public class KnapSac {
+	class item{
+		
+	}
+}

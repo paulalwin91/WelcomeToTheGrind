@@ -1,0 +1,13 @@
+[Continents]
+india=5
+
+
+[Territories]
+
+aa,47,76,india,bb,cc
+bb,155,70,india,aa,ii,uu
+cc,334,38,india,aa
+ii,209,128,india,bb
+uu,280,134,india,bb
+
+;;

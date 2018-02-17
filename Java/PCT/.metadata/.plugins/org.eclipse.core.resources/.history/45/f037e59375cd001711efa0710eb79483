@@ -1,0 +1,11 @@
+package javaapplication2;
+
+public class BinaryTree {
+	public static void main(String[] args) {
+		
+	}
+	
+	public static addNode(Node node) {
+		
+	}
+}

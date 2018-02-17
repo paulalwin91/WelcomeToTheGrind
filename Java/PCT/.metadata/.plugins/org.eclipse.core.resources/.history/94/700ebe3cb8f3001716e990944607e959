@@ -1,0 +1,24 @@
+package javaapplication2;
+
+public class KadaneAl {
+	public static void main(String[] args) {
+		int[] arr = { 2, -1, 34, 1, -3, 6 };
+		believeKad(arr);
+	}
+
+	private static void believeKad(int[] arr) {
+		int mega_max = 0;
+		int temp_max = 0;
+
+		for (int i = 0; i < arr.length; i++) {
+			temp_max = temp_max + arr[i];
+			
+			if(temp_max < 0)
+				temp_max = 0;
+			
+			if(temp_max > mega_max)
+				mega_max = temp_max; 
+		}
+
+	}
+}

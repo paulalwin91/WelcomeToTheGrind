@@ -1,0 +1,54 @@
+package javaapplication2;
+
+import java.util.Queue;
+
+public class Equivalence {
+
+	static int level = 3;
+	static Node root;
+	static int index = 1;
+	static Queue<Node> queue;
+
+	public static void main(String[] args) {
+
+		//updateQueue();
+		createTree(root);
+		root.Key = 1;
+		queue.add(root);
+		updateValues(root);
+
+	}
+
+//	private static void updateQueue() {
+//		int k = 0;
+//		for (int i = 1; i <= level; i++) {
+//			k = 2 * k + 1;
+//		}
+//		queue = new Queue<Node>();
+//	}
+
+	private static void updateValues() {
+		
+		Node r = queue.poll();
+		r.Key = index++;
+		queue.add(r.left);
+		queue.add(r.right);
+		
+	}
+
+	private static void createTree(Node currentNode) {
+		if (root == null) {
+			root = new Node(0, 0, null);
+			createTree(root);
+		}
+
+		if (currentNode.level == level)
+			return;
+
+		currentNode.left = new Node(0, currentNode.level + 1, currentNode);
+		currentNode.right = new Node(0, currentNode.level + 1, currentNode);
+
+		createTree(currentNode.left);
+		createTree(currentNode.right);
+	}
+}

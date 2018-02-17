@@ -1,0 +1,52 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.List;
+
+public class MoiThread implements Runnable{
+    private String m_intialCharacter;
+    private List<String> m_airports;
+   	private DistanceFinderDriver m_Dfd;
+   	private BufferedWriter brWriter;
+	File newFile = new File("C:\\Users\\Admin\\Desktop\\Documents\\Text\\Distance.txt");
+    FileWriter fr;
+
+   	
+   	
+	public MoiThread(String intialCharacter, List<String> airports,DistanceFinderDriver distanceFinder) {
+		// TODO Auto-generated constructor stub
+		m_Dfd = distanceFinder;
+		for(String str: airports)
+		{
+			if(str.startsWith(intialCharacter))
+				m_airports.add(str);
+		} 
+		fr = new FileWriter(newFile,false);
+		brWriter = new BufferedWriter(fr);
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		List<String> origin = m_airports;
+		List<String> destination = m_airports;
+		
+		
+        for(String org : origin)
+        {
+        	for(String des: destination)
+        	{
+        		String distance;
+        		if(!des.equals("")) {
+        		distance = m_Dfd.FetchDistance(org, des);
+        		brWriter.write(org + "," + des + "," + distance);
+        		brWriter.newLine();
+        		}
+              }
+        }
+		
+	}
+
+	
+}

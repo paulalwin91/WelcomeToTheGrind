@@ -1,0 +1,43 @@
+package javaapplication2;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
+
+public class HashIt {
+	public static void main(String[] args) {
+		HashMap<String, String> hs = new HashMap<String, String>();
+		hs.put("a", "apple");
+		hs.put("b", "basket");
+		hs.put("c", "cast");
+		hs.put("d", "dust");
+		hs.put(null, "dust");
+		
+		HashSet hp = new HashSet();
+		hp.add("d");
+		hp.add("d");
+		
+		java.util.Iterator ip = hs.keySet().iterator();
+		while (ic.hasNext()) {
+			System.out.println(hs.get(ic.next()));
+		}
+		
+
+		java.util.Iterator<String> ic = hs.keySet().iterator();
+		while (ic.hasNext()) {
+			System.out.println(hs.get(ic.next()));
+		}
+
+		System.out.println("------");
+
+		// Entry<String, String> is = hs.entrySet();
+		// while(ic.hasNext()) {
+		// System.out.println("------");
+		// System.out.println(ic.get );
+		// }
+
+	}
+}

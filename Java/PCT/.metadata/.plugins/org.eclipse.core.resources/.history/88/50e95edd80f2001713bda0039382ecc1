@@ -1,0 +1,29 @@
+package dynamix;
+
+import java.util.ArrayList;
+
+public class KnapSac {
+	static class item {
+		int weight;
+		int value;
+
+		public item(int w, int v) {
+			this.weight = w;
+			this.value = v;
+		}
+	}
+
+	static int maxWeight = 5;
+	public static void main(String[] args) {
+		ArrayList<item> items = new ArrayList<item>();
+		items.add(new item(2,6));
+		items.add(new item(2,10));
+		items.add(new item(3,12));
+		System.out.println(maxValue(items));
+	}
+	private static char[] maxValue(ArrayList<item> items) {
+	
+		return null;
+	}
+	
+}

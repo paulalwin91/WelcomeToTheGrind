@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;javaapplication2.Trees&apos; to &apos;PerfectBSTTrees&apos;&#x0D;&#x0A;- Original project: &apos;JavaApplication2&apos;&#x0D;&#x0A;- Original element: &apos;javaapplication2.Trees&apos;&#x0D;&#x0A;- Renamed element: &apos;javaapplication2.PerfectBSTTrees&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Trees&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;javaapplication2{Trees.java[Trees" matchStrategy="1" name="PerfectBSTTrees" qualified="false" references="true" similarDeclarations="false" stamp="1511128866276" textual="false" version="1.0"/>
+</session>
