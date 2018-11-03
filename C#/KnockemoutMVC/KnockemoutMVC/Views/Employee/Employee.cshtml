@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Employee";
+}
+
+<style type="text/css">
+    .errorStyle {
+        border: 2px solid red;
+        background-color: #fdd;
+    }
+</style>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/knockout-3.3.0.js"></script>
+<script src="~/Scripts/knockout.validation.min.js"></script>
+
+
+<h1>Employee Information System</h1>
+<form method="post" action="">
+    <table class="table table-bordered table-condensed table-striped" id="tblemp">
+
+        <tr>
+            <td>EmpName</td>
+            <td>
+                <input type="text" id="EmpName" data-bind="value:EmpName" />
+            </td>
+        </tr>
+        <tr>
+            <td>Salary</td>
+            <td>
+                <input type="text" id="Salary" data-bind="value:Salary" />
+            </td>
+        </tr>
+        <tr>
+            <td>DeptName</td>
+            <td>
+                <input type="text" id="DeptName" data-bind="value:DeptName" />
+            </td>
+        </tr>
+        <tr>
+            <td>Designation</td>
+            <td>
+                <input type="text" id="Designation" data-bind="value:Designation" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="Save" id="save"
+                       data-bind="click: EmployeeInformationSystem.saveEmployee" class="btn btn-success" />
+            </td>
+            <td></td>
+        </tr>
+    </table>
+
+</form>
+

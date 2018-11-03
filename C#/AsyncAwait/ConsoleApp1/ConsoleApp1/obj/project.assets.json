@@ -7045,11 +7045,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "E:\\code\\Practice\\AsyncAwait\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj",
+      "projectUniqueName": "F:\\Work\\WelcomeToTheGrind\\C#\\AsyncAwait\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj",
       "projectName": "ConsoleApp1",
-      "projectPath": "E:\\code\\Practice\\AsyncAwait\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj",
+      "projectPath": "F:\\Work\\WelcomeToTheGrind\\C#\\AsyncAwait\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "E:\\code\\Practice\\AsyncAwait\\ConsoleApp1\\ConsoleApp1\\obj\\",
+      "outputPath": "F:\\Work\\WelcomeToTheGrind\\C#\\AsyncAwait\\ConsoleApp1\\ConsoleApp1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
