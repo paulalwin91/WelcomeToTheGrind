@@ -1,28 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Description;
-using KnockemoutMVC.Database;
-
-namespace KnockemoutMVC.API
+﻿namespace KnockemoutMVC.API
 {
+    using KnockemoutMVC.Database;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    using System.Linq;
+    using System.Net;
+    using System.Web.Http;
+    using System.Web.Http.Description;
+
+    /// <summary>
+    /// DOES NOT WORK!!
+    /// Defines the <see cref="EmployeeInfoAPIController" />
+    /// </summary>
     public class EmployeeInfoAPIController : ApiController
     {
+        /// <summary>
+        /// Defines the db 
+        /// </summary>
         private LocalhostEntities db = new LocalhostEntities();
 
-        // GET: api/EmployeeInfoAPI
+        /// <summary>
+        /// The GetEmployeeInfoes
+        /// </summary>
+        /// <returns>The <see cref="IQueryable{EmployeeInfo}"/></returns>
+        [Route("api/EmployeeInfoAPI/GetEmployeeInfoes")]
         public IQueryable<EmployeeInfo> GetEmployeeInfoes()
         {
             return db.EmployeeInfoes;
         }
 
-        // GET: api/EmployeeInfoAPI/5
+        /// <summary>
+        /// The GetEmployeeInfo
+        /// </summary>
+        /// <param name="id">The id<see cref="int"/></param>
+        /// <returns>The <see cref="IHttpActionResult"/></returns>
         [ResponseType(typeof(EmployeeInfo))]
         public IHttpActionResult GetEmployeeInfo(int id)
         {
@@ -35,7 +46,12 @@ namespace KnockemoutMVC.API
             return Ok(employeeInfo);
         }
 
-        // PUT: api/EmployeeInfoAPI/5
+        /// <summary>
+        /// The PutEmployeeInfo
+        /// </summary>
+        /// <param name="id">The id<see cref="int"/></param>
+        /// <param name="employeeInfo">The employeeInfo<see cref="EmployeeInfo"/></param>
+        /// <returns>The <see cref="IHttpActionResult"/></returns>
         [ResponseType(typeof(void))]
         public IHttpActionResult PutEmployeeInfo(int id, EmployeeInfo employeeInfo)
         {
@@ -70,7 +86,11 @@ namespace KnockemoutMVC.API
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/EmployeeInfoAPI
+        /// <summary>
+        /// The PostEmployeeInfo
+        /// </summary>
+        /// <param name="employeeInfo">The employeeInfo<see cref="EmployeeInfo"/></param>
+        /// <returns>The <see cref="IHttpActionResult"/></returns>
         [ResponseType(typeof(EmployeeInfo))]
         public IHttpActionResult PostEmployeeInfo(EmployeeInfo employeeInfo)
         {
@@ -85,7 +105,11 @@ namespace KnockemoutMVC.API
             return CreatedAtRoute("DefaultApi", new { id = employeeInfo.EmpNo }, employeeInfo);
         }
 
-        // DELETE: api/EmployeeInfoAPI/5
+        /// <summary>
+        /// The DeleteEmployeeInfo
+        /// </summary>
+        /// <param name="id">The id<see cref="int"/></param>
+        /// <returns>The <see cref="IHttpActionResult"/></returns>
         [ResponseType(typeof(EmployeeInfo))]
         public IHttpActionResult DeleteEmployeeInfo(int id)
         {
@@ -101,6 +125,10 @@ namespace KnockemoutMVC.API
             return Ok(employeeInfo);
         }
 
+        /// <summary>
+        /// The Dispose
+        /// </summary>
+        /// <param name="disposing">The disposing<see cref="bool"/></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -110,6 +138,11 @@ namespace KnockemoutMVC.API
             base.Dispose(disposing);
         }
 
+        /// <summary>
+        /// The EmployeeInfoExists
+        /// </summary>
+        /// <param name="id">The id<see cref="int"/></param>
+        /// <returns>The <see cref="bool"/></returns>
         private bool EmployeeInfoExists(int id)
         {
             return db.EmployeeInfoes.Count(e => e.EmpNo == id) > 0;

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace KnockemoutMVC
+namespace WebAPIKOEF
 {
     public class RouteConfig
     {
@@ -16,14 +16,8 @@ namespace KnockemoutMVC
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Product", action = "Products", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-
-            routes.MapRoute(
-            name: "API",
-            url: "api/{controller}/{id}",
-            defaults: new { id = UrlParameter.Optional }
-);
         }
     }
 }

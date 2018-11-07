@@ -3,19 +3,20 @@
     ViewBag.Title = "Employee";
 }
 
-<style type="text/css">
+@section mycss{
     .errorStyle {
-        border: 2px solid red;
-        background-color: #fdd;
+    border: 2px solid red;
+    background-color: #fdd;
     }
-</style>
+}
 
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-2.1.4.min.js"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
-<script src="~/Scripts/knockout-3.3.0.js"></script>
-<script src="~/Scripts/knockout.validation.min.js"></script>
-
+@section scripts {
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/knockout-3.3.0.js"></script>
+    <script src="~/Scripts/knockout.validation.min.js"></script>
+    <script src="~/Scripts/Employee/Employee.js"></script>
+}
 
 <h1>Employee Information System</h1>
 <form method="post" action="">

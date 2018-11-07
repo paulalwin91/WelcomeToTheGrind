@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnockemoutMVC", "KnockemoutMVC\KnockemoutMVC.csproj", "{F26BF890-6EC5-4634-9B62-FA1E86C1393E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPINoDatabase", "WebAPI\WebAPINoDatabase.csproj", "{4A07F5F6-1768-4DB1-B7BF-7066DFF9D630}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPIKOEF", "WebAPIKOEF\WebAPIKOEF.csproj", "{3B3FFD73-0622-4BEC-9E22-DAA5338A34C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{F26BF890-6EC5-4634-9B62-FA1E86C1393E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F26BF890-6EC5-4634-9B62-FA1E86C1393E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F26BF890-6EC5-4634-9B62-FA1E86C1393E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A07F5F6-1768-4DB1-B7BF-7066DFF9D630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A07F5F6-1768-4DB1-B7BF-7066DFF9D630}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A07F5F6-1768-4DB1-B7BF-7066DFF9D630}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A07F5F6-1768-4DB1-B7BF-7066DFF9D630}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B3FFD73-0622-4BEC-9E22-DAA5338A34C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B3FFD73-0622-4BEC-9E22-DAA5338A34C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B3FFD73-0622-4BEC-9E22-DAA5338A34C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B3FFD73-0622-4BEC-9E22-DAA5338A34C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
