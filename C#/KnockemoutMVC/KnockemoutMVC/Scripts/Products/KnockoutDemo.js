@@ -141,6 +141,25 @@ function ProductViewModel() {
                 });
         }
     }
+
+    self.start = function () {
+        $.ajax({
+            url: 'Product/StartService',
+            //context: document.body
+        }).done(function () {
+            //$(this).addClass("done");
+        });
+    }
+
+    self.end = function () {
+        $.ajax({
+            url: 'Product/EndService/',
+            //context: document.body
+        }).done(function () {
+            //$(this).addClass("done");
+        });
+    }
+
 }
 
 var viewModel = new ProductViewModel();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -16,7 +17,7 @@ namespace WebAPIKOEF.Controllers
 {
     public class AuthorsController : ApiController
     {
-        private WebAPIKOEFContext db = new WebAPIKOEFContext();
+        private WebAPIKOEFContext db = new WebAPIKOEFContext(new System.Data.SqlClient.SqlConnection());
 
         // GET: api/Authors
         public IQueryable<Author> GetAuthors()

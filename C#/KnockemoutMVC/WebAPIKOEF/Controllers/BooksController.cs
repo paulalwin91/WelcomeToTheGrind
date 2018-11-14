@@ -20,7 +20,7 @@
         /// <summary>
         /// Defines the db
         /// </summary>
-        private WebAPIKOEFContext db = new WebAPIKOEFContext();
+        private WebAPIKOEFContext db = new WebAPIKOEFContext(new System.Data.SqlClient.SqlConnection());
 
         /// <summary>
         /// The GetBooks
