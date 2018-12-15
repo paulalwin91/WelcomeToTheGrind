@@ -13,6 +13,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceReadMSMQ", "ServiceR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsService1", "WindowsService1\WindowsService1.csproj", "{2345D7DE-FB04-4352-9E61-89C15EA4ABBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCClaimsAuth", "MVCClaimsAuth\MVCClaimsAuth.csproj", "{146336E1-8104-4024-B80B-5CA450CED99E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClaimsCore", "ClaimsCore\ClaimsCore.csproj", "{1EC90030-AF2C-48EE-9086-D511AE7FF367}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinMVC", "OwinMVC\OwinMVC.csproj", "{E388CD87-DCFC-40CA-945F-681C85D5A32B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVCCore", "MVCCore\MVCCore.csproj", "{75BFC031-BC9A-43EC-ACB3-A3C88CF65148}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode", "AdventOfCode\AdventOfCode.csproj", "{A180E692-E9D6-4EC2-9650-128786632C6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +49,26 @@ Global
 		{2345D7DE-FB04-4352-9E61-89C15EA4ABBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2345D7DE-FB04-4352-9E61-89C15EA4ABBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2345D7DE-FB04-4352-9E61-89C15EA4ABBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{146336E1-8104-4024-B80B-5CA450CED99E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{146336E1-8104-4024-B80B-5CA450CED99E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{146336E1-8104-4024-B80B-5CA450CED99E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{146336E1-8104-4024-B80B-5CA450CED99E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EC90030-AF2C-48EE-9086-D511AE7FF367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EC90030-AF2C-48EE-9086-D511AE7FF367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EC90030-AF2C-48EE-9086-D511AE7FF367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EC90030-AF2C-48EE-9086-D511AE7FF367}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E388CD87-DCFC-40CA-945F-681C85D5A32B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E388CD87-DCFC-40CA-945F-681C85D5A32B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E388CD87-DCFC-40CA-945F-681C85D5A32B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E388CD87-DCFC-40CA-945F-681C85D5A32B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75BFC031-BC9A-43EC-ACB3-A3C88CF65148}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75BFC031-BC9A-43EC-ACB3-A3C88CF65148}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75BFC031-BC9A-43EC-ACB3-A3C88CF65148}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75BFC031-BC9A-43EC-ACB3-A3C88CF65148}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A180E692-E9D6-4EC2-9650-128786632C6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A180E692-E9D6-4EC2-9650-128786632C6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A180E692-E9D6-4EC2-9650-128786632C6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A180E692-E9D6-4EC2-9650-128786632C6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
